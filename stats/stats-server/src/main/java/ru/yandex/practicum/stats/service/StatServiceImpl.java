@@ -1,6 +1,5 @@
 package ru.yandex.practicum.service;
 
-import static ru.yandex.practicum.mapper.StatsMapper.mapToEntity;
 
 import java.time.LocalDateTime;
 import java.util.Collection;
@@ -9,6 +8,8 @@ import java.util.List;
 import ru.yandex.practicum.dto.EndpointHitDto;
 import ru.yandex.practicum.dto.ViewStatsDto;
 import ru.yandex.practicum.exception.IllegalArgumentException;
+import ru.yandex.practicum.mapper.StatsMapper;
+import ru.yandex.practicum.model.StatsInfo;
 import ru.yandex.practicum.repository.StatRepository;
 
 import org.springframework.stereotype.Service;
@@ -21,11 +22,12 @@ import lombok.RequiredArgsConstructor;
 public class StatServiceImpl implements StatService {
 
     private final StatRepository statRepository;
+    private final StatsMapper statsMapper;
 
     @Override
     @Transactional
     public void createEndpointHit(EndpointHitDto endpointHitDto) {
-        statRepository.save(mapToEntity(endpointHitDto));
+        statRepository.save(statsMapper.mapToEntity(endpointHitDto));
     }
 
     @Override
@@ -35,18 +37,23 @@ public class StatServiceImpl implements StatService {
             throw new IllegalArgumentException("The end date must be before start date.");
         }
 
+        List<StatsInfo> statsInfoList;
         if (uris != null) {
             if (unique) {
-                return statRepository.getUniqueStatsWithUris(start, end, uris);
+                statsInfoList = statRepository.getUniqueStatsWithUris(start, end, uris);
             } else {
-                return statRepository.getNotUniqueStatsWithUris(start, end, uris);
+                statsInfoList = statRepository.getNotUniqueStatsWithUris(start, end, uris);
             }
         } else {
             if (unique) {
-                return statRepository.getUniqueStatsWithoutUris(start, end);
+                statsInfoList = statRepository.getUniqueStatsWithoutUris(start, end);
             } else {
-                return statRepository.getNotUniqueStatsWithoutUris(start, end);
+                statsInfoList = statRepository.getNotUniqueStatsWithoutUris(start, end);
             }
         }
+
+        return statsInfoList.stream()
+                .map(statsMapper::mapToDto)
+                .toList();
     }
 }

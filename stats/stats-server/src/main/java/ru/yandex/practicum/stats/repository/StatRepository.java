@@ -9,45 +9,46 @@ import ru.yandex.practicum.model.Stats;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import ru.yandex.practicum.model.StatsInfo;
 
 public interface StatRepository extends JpaRepository<Stats, Long> {
 
     @Query("""
-        SELECT new ru.yandex.practicum.dto.ViewStatsDto(st.app, st.uri, COUNT(DISTINCT st.ip))
+        SELECT new ru.yandex.practicum.model.StatsInfo(st.app, st.uri, COUNT(DISTINCT st.ip))
         FROM Stats AS st
         WHERE st.created BETWEEN :start AND :end AND st.uri IN :uris
         GROUP BY st.uri, st.app
         ORDER BY COUNT(DISTINCT st.ip) DESC
         """)
-    List<ViewStatsDto> getUniqueStatsWithUris(@Param("start") LocalDateTime start, @Param("end") LocalDateTime end,
-        @Param("uris") List<String> uris);
+    List<StatsInfo> getUniqueStatsWithUris(@Param("start") LocalDateTime start, @Param("end") LocalDateTime end,
+                                           @Param("uris") List<String> uris);
 
     @Query("""
-        SELECT new ru.yandex.practicum.dto.ViewStatsDto(st.app, st.uri, COUNT(st.ip))
+        SELECT new ru.yandex.practicum.model.StatsInfo(st.app, st.uri, COUNT(st.ip))
         FROM Stats AS st
         WHERE st.created BETWEEN :start AND :end AND st.uri IN :uris
         GROUP BY st.uri, st.app
         ORDER BY COUNT(st.ip) DESC
         """)
-    List<ViewStatsDto> getNotUniqueStatsWithUris(@Param("start") LocalDateTime start, @Param("end") LocalDateTime end,
+    List<StatsInfo> getNotUniqueStatsWithUris(@Param("start") LocalDateTime start, @Param("end") LocalDateTime end,
         @Param("uris") List<String> uris);
 
     @Query("""
-        SELECT new ru.yandex.practicum.dto.ViewStatsDto(st.app, st.uri, COUNT(DISTINCT st.ip))
+        SELECT new ru.yandex.practicum.model.StatsInfo(st.app, st.uri, COUNT(DISTINCT st.ip))
         FROM Stats AS st
         WHERE st.created BETWEEN :start AND :end
         GROUP BY st.uri, st.app
         ORDER BY COUNT(DISTINCT st.ip) DESC
         """)
-    List<ViewStatsDto> getUniqueStatsWithoutUris(@Param("start") LocalDateTime start, @Param("end") LocalDateTime end);
+    List<StatsInfo> getUniqueStatsWithoutUris(@Param("start") LocalDateTime start, @Param("end") LocalDateTime end);
 
     @Query("""
-        SELECT new ru.yandex.practicum.dto.ViewStatsDto(st.app, st.uri, COUNT(st.ip))
+        SELECT new ru.yandex.practicum.model.StatsInfo(st.app, st.uri, COUNT(st.ip))
         FROM Stats AS st
         WHERE st.created BETWEEN :start AND :end
         GROUP BY st.uri, st.app
         ORDER BY COUNT(st.ip) DESC
         """)
-    List<ViewStatsDto> getNotUniqueStatsWithoutUris(@Param("start") LocalDateTime start,
+    List<StatsInfo> getNotUniqueStatsWithoutUris(@Param("start") LocalDateTime start,
         @Param("end") LocalDateTime end);
 }
