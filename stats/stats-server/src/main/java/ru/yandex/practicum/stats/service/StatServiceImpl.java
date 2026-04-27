@@ -1,5 +1,4 @@
-package ru.yandex.practicum.service;
-
+package ru.yandex.practicum.stats.service;
 
 import java.time.LocalDateTime;
 import java.util.Collection;
@@ -7,10 +6,10 @@ import java.util.List;
 
 import ru.yandex.practicum.dto.EndpointHitDto;
 import ru.yandex.practicum.dto.ViewStatsDto;
-import ru.yandex.practicum.exception.IllegalArgumentException;
-import ru.yandex.practicum.mapper.StatsMapper;
-import ru.yandex.practicum.model.StatsInfo;
-import ru.yandex.practicum.repository.StatRepository;
+import ru.yandex.practicum.stats.exception.IllegalArgumentException;
+import ru.yandex.practicum.stats.mapper.StatsMapper;
+import ru.yandex.practicum.stats.model.StatsInfo;
+import ru.yandex.practicum.stats.repository.StatRepository;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -53,7 +52,7 @@ public class StatServiceImpl implements StatService {
         }
 
         return statsInfoList.stream()
-                .map(statsMapper::mapToDto)
-                .toList();
+            .map(statsMapper::mapToDto)
+            .toList();
     }
 }

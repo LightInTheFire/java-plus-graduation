@@ -1,4 +1,4 @@
-package ru.yandex.practicum.exception;
+package ru.yandex.practicum.stats.exception;
 
 public class IllegalArgumentException extends RuntimeException {
 

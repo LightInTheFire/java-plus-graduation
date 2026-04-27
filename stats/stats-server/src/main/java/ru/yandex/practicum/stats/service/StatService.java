@@ -1,4 +1,4 @@
-package ru.yandex.practicum.service;
+package ru.yandex.practicum.stats.service;
 
 import java.time.LocalDateTime;
 import java.util.Collection;

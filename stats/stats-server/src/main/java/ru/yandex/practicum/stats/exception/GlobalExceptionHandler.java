@@ -1,4 +1,4 @@
-package ru.yandex.practicum.exception;
+package ru.yandex.practicum.stats.exception;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -6,9 +6,9 @@ import java.util.stream.Collectors;
 
 import jakarta.validation.ConstraintViolationException;
 
-import ru.yandex.practicum.exception.dto.ErrorResponse;
-import ru.yandex.practicum.exception.dto.ValidationErrorResponse;
-import ru.yandex.practicum.exception.dto.Violation;
+import ru.yandex.practicum.stats.exception.dto.ErrorResponse;
+import ru.yandex.practicum.stats.exception.dto.ValidationErrorResponse;
+import ru.yandex.practicum.stats.exception.dto.Violation;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.MethodArgumentNotValidException;

@@ -1,4 +1,4 @@
-package ru.yandex.practicum.exception.dto;
+package ru.yandex.practicum.stats.exception.dto;
 
 import java.util.List;
 

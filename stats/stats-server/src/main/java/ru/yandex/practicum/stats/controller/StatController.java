@@ -1,4 +1,4 @@
-package ru.yandex.practicum.controller;
+package ru.yandex.practicum.stats.controller;
 
 import java.time.LocalDateTime;
 import java.util.Collection;
@@ -8,7 +8,7 @@ import jakarta.validation.Valid;
 
 import ru.yandex.practicum.dto.EndpointHitDto;
 import ru.yandex.practicum.dto.ViewStatsDto;
-import ru.yandex.practicum.service.StatService;
+import ru.yandex.practicum.stats.service.StatService;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
