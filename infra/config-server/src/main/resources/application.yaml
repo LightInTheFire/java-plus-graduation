@@ -14,7 +14,7 @@ spring:
             - classpath:config/stats/{application}
 
 server:
-  port: 8888
+  port: 0
 
 eureka:
   client:
