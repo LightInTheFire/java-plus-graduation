@@ -1,0 +1,52 @@
+package ru.yandex.practicum.stats.repository;
+
+import java.time.LocalDateTime;
+import java.util.List;
+
+import ru.yandex.practicum.stats.model.Stats;
+import ru.yandex.practicum.stats.model.StatsInfo;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+
+public interface StatRepository extends JpaRepository<Stats, Long> {
+
+    @Query("""
+        SELECT new ru.yandex.practicum.stats.model.StatsInfo(st.app, st.uri, COUNT(DISTINCT st.ip))
+        FROM Stats AS st
+        WHERE st.created BETWEEN :start AND :end AND st.uri IN :uris
+        GROUP BY st.uri, st.app
+        ORDER BY COUNT(DISTINCT st.ip) DESC
+        """)
+    List<StatsInfo> getUniqueStatsWithUris(@Param("start") LocalDateTime start, @Param("end") LocalDateTime end,
+        @Param("uris") List<String> uris);
+
+    @Query("""
+        SELECT new ru.yandex.practicum.stats.model.StatsInfo(st.app, st.uri, COUNT(st.ip))
+        FROM Stats AS st
+        WHERE st.created BETWEEN :start AND :end AND st.uri IN :uris
+        GROUP BY st.uri, st.app
+        ORDER BY COUNT(st.ip) DESC
+        """)
+    List<StatsInfo> getNotUniqueStatsWithUris(@Param("start") LocalDateTime start, @Param("end") LocalDateTime end,
+        @Param("uris") List<String> uris);
+
+    @Query("""
+        SELECT new ru.yandex.practicum.stats.model.StatsInfo(st.app, st.uri, COUNT(DISTINCT st.ip))
+        FROM Stats AS st
+        WHERE st.created BETWEEN :start AND :end
+        GROUP BY st.uri, st.app
+        ORDER BY COUNT(DISTINCT st.ip) DESC
+        """)
+    List<StatsInfo> getUniqueStatsWithoutUris(@Param("start") LocalDateTime start, @Param("end") LocalDateTime end);
+
+    @Query("""
+        SELECT new ru.yandex.practicum.stats.model.StatsInfo(st.app, st.uri, COUNT(st.ip))
+        FROM Stats AS st
+        WHERE st.created BETWEEN :start AND :end
+        GROUP BY st.uri, st.app
+        ORDER BY COUNT(st.ip) DESC
+        """)
+    List<StatsInfo> getNotUniqueStatsWithoutUris(@Param("start") LocalDateTime start, @Param("end") LocalDateTime end);
+}
