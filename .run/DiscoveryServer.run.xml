@@ -1,0 +1,9 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="DiscoveryServer" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+    <module name="discovery-server" />
+    <option name="SPRING_BOOT_MAIN_CLASS" value="ru.yandex.practicum.DiscoveryServer" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>
