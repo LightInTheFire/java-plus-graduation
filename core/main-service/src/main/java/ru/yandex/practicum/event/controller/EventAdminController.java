@@ -9,8 +9,8 @@ import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
 
 import ru.yandex.practicum.event.dto.EventFullDto;
+import ru.yandex.practicum.event.dto.EventState;
 import ru.yandex.practicum.event.dto.UpdateEventAdminRequest;
-import ru.yandex.practicum.event.model.EventState;
 import ru.yandex.practicum.event.service.EventService;
 import ru.yandex.practicum.event.service.EventsAdminGetRequest;
 

@@ -17,11 +17,11 @@ import java.util.Map;
 
 import ru.yandex.practicum.category.model.Category;
 import ru.yandex.practicum.category.repository.CategoryRepository;
+import ru.yandex.practicum.event.dto.EventState;
 import ru.yandex.practicum.event.model.Event;
-import ru.yandex.practicum.event.model.EventState;
 import ru.yandex.practicum.event.model.Location;
 import ru.yandex.practicum.event.repository.EventRepository;
-import ru.yandex.practicum.request.model.EventRequestStatus;
+import ru.yandex.practicum.request.dto.EventRequestStatus;
 import ru.yandex.practicum.request.repository.ParticipationRequestRepository;
 import ru.yandex.practicum.user.model.User;
 import ru.yandex.practicum.user.repository.UserRepository;

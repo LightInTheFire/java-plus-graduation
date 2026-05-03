@@ -15,6 +15,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 import ru.yandex.practicum.event.model.Event;
+import ru.yandex.practicum.request.dto.EventRequestStatus;
 import ru.yandex.practicum.user.model.User;
 
 import lombok.AccessLevel;

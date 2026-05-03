@@ -3,7 +3,7 @@ package ru.yandex.practicum.event.service;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import ru.yandex.practicum.event.model.EventState;
+import ru.yandex.practicum.event.dto.EventState;
 
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;

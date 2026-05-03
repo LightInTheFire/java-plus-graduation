@@ -5,8 +5,8 @@ import java.util.Collection;
 import java.util.Optional;
 import java.util.Set;
 
+import ru.yandex.practicum.event.dto.EventState;
 import ru.yandex.practicum.event.model.Event;
-import ru.yandex.practicum.event.model.EventState;
 import ru.yandex.practicum.event.model.QEvent;
 import ru.yandex.practicum.event.service.EventsAdminGetRequest;
 import ru.yandex.practicum.event.service.EventsPublicGetRequest;
