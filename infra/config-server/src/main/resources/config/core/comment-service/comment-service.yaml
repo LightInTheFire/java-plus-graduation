@@ -6,4 +6,4 @@ spring:
     include:
       - db
   datasource:
-    url: jdbc:postgresql://localhost:5432/events
+    url: jdbc:postgresql://localhost:5432/comments
