@@ -1,16 +1,15 @@
 package ru.yandex.practicum.event.dto;
 
-import java.time.LocalDateTime;
-
 import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.PositiveOrZero;
 import jakarta.validation.constraints.Size;
+import ru.yandex.practicum.event.model.AdminStateAction;
 
-import ru.yandex.practicum.event.model.UserStateAction;
+import java.time.LocalDateTime;
 
-public record UpdateEventUserRequest(@Size(min = 20, max = 2000) String annotation, Long category,
+public record UpdateEventAdminRequest(@Size(min = 20, max = 2000) String annotation, Long category,
     @Size(min = 20, max = 7000) String description, @Future LocalDateTime eventDate, LocationDto location, Boolean paid,
-    @PositiveOrZero Integer participantLimit, Boolean requestModeration, UserStateAction stateAction,
+    @PositiveOrZero Integer participantLimit, Boolean requestModeration, AdminStateAction stateAction,
     @Size(min = 3, max = 120) String title) implements UpdatableEvent {
 
     public boolean hasAnnotation() {
