@@ -1,34 +1,16 @@
 services:
-  stats-db:
-    image: postgres:17.7-alpine3.23
-    container_name: stats-db
+  postgres-db:
+    image: postgres:18.3-alpine3.23
+    container_name: postgres-db
     restart: unless-stopped
     ports:
-      - "13000:5432"
+      - "5432:5432"
     environment:
-      - POSTGRES_DB=stats
-      - POSTGRES_USER=stats_user
+      - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=secret
     volumes:
-      - stats-db-data:/var/lib/postgresql/data/
-    healthcheck:
-      test: pg_isready -q -d $$POSTGRES_DB -U $$POSTGRES_USER
-      timeout: 5s
-      interval: 5s
-      retries: 10
-
-  ewm-db:
-    image: postgres:17.7-alpine3.23
-    container_name: ewm-db
-    restart: unless-stopped
-    ports:
-      - "13001:5432"
-    environment:
-      - POSTGRES_DB=ewm
-      - POSTGRES_USER=ewm_user
-      - POSTGRES_PASSWORD=secret
-    volumes:
-      - ewm-db-data:/var/lib/postgresql/data/
+      - ewm-db-data:/var/lib/postgresql
+      - ./init-db:/docker-entrypoint-initdb.d
     healthcheck:
       test: pg_isready -q -d $$POSTGRES_DB -U $$POSTGRES_USER
       timeout: 5s
@@ -36,5 +18,4 @@ services:
       retries: 10
 
 volumes:
-  stats-db-data:
   ewm-db-data:
