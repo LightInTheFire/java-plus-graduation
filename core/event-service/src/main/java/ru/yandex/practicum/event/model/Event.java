@@ -6,7 +6,6 @@ import jakarta.persistence.*;
 
 import ru.yandex.practicum.category.model.Category;
 import ru.yandex.practicum.event.dto.EventState;
-import ru.yandex.practicum.user.model.User;
 
 import lombok.experimental.FieldDefaults;
 import lombok.*;
@@ -17,7 +16,7 @@ import lombok.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "event")
+@Table(name = "events")
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Event {
 
@@ -41,9 +40,8 @@ public class Event {
     @Column(nullable = false)
     LocalDateTime eventDate;
 
-    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "initiator_id", nullable = false)
-    User initiator;
+    Long initiatorId;
 
     @Embedded
     Location location;

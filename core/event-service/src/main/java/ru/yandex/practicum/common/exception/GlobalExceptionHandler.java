@@ -1,10 +1,9 @@
-package ru.yandex.practicum.exception.handler;
+package ru.yandex.practicum.common.exception;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import jakarta.validation.ConstraintViolationException;
 
@@ -73,7 +72,7 @@ public class GlobalExceptionHandler {
                     violation.getPropertyPath()
                         .toString(),
                     violation.getMessage()))
-            .collect(Collectors.toList());
+            .toList();
         log.warn(violations.toString());
         List<String> errors = violations.stream()
             .map(Violation::toString)
@@ -93,7 +92,7 @@ public class GlobalExceptionHandler {
             .getFieldErrors()
             .stream()
             .map(error -> new Violation(error.getField(), error.getDefaultMessage()))
-            .collect(Collectors.toList());
+            .toList();
         log.warn(violations.toString());
         List<String> errors = violations.stream()
             .map(Violation::toString)

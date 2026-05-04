@@ -23,4 +23,8 @@ public interface EventService {
     EventFullDto updateEvent(Long eventId, UpdateEventAdminRequest updateRequest);
 
     EventFullDto updateEventByUser(Long userId, Long eventId, UpdateEventUserRequest updateRequest);
+
+    boolean existsById(Long id);
+
+    EventInfoDto getEventById(Long eventId);
 }

@@ -8,9 +8,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
 
-import ru.yandex.practicum.comment.dto.CommentDto;
-import ru.yandex.practicum.comment.service.CommentService;
-import ru.yandex.practicum.comment.service.CommentsPublicGetRequest;
 import ru.yandex.practicum.event.dto.EventFullDto;
 import ru.yandex.practicum.event.dto.EventShortDto;
 import ru.yandex.practicum.event.service.EventService;
@@ -31,7 +28,6 @@ import lombok.extern.slf4j.Slf4j;
 public class EventPublicController {
 
     private final EventService eventService;
-    private final CommentService commentService;
 
     @GetMapping()
     public Collection<EventShortDto> getEventsFiltered(@RequestParam(required = false) String text,
@@ -68,13 +64,4 @@ public class EventPublicController {
         return eventService.getById(eventId, request);
     }
 
-    @GetMapping("/{eventId}/comments")
-    public Collection<CommentDto> getComments(@PathVariable Long eventId,
-        @RequestParam(defaultValue = "0") @PositiveOrZero int from,
-        @RequestParam(defaultValue = "10") @Positive int size) {
-
-        CommentsPublicGetRequest request = new CommentsPublicGetRequest(eventId, from, size);
-        log.info("All comments for event {} requested with params {}", eventId, request);
-        return commentService.getAllCommentsPaged(request);
-    }
 }

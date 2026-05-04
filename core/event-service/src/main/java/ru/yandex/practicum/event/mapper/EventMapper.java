@@ -6,16 +6,16 @@ import ru.yandex.practicum.category.mapper.CategoryMapper;
 import ru.yandex.practicum.category.model.Category;
 import ru.yandex.practicum.event.dto.*;
 import ru.yandex.practicum.event.model.Event;
+import ru.yandex.practicum.event.model.EventInfo;
 import ru.yandex.practicum.event.model.Location;
-import ru.yandex.practicum.user.mapper.UserMapper;
-import ru.yandex.practicum.user.model.User;
+import ru.yandex.practicum.user.dto.UserShortDto;
 
 import lombok.experimental.UtilityClass;
 
 @UtilityClass
 public class EventMapper {
 
-    public Event mapToEntity(NewEventDto newEventDto, Category category, User initiator, Location location) {
+    public Event mapToEntity(NewEventDto newEventDto, Category category, UserShortDto userDto, Location location) {
         return new Event(
             null,
             newEventDto.annotation(),
@@ -23,7 +23,7 @@ public class EventMapper {
             LocalDateTime.now(),
             newEventDto.description(),
             newEventDto.eventDate(),
-            initiator,
+            userDto.id(),
             location,
             newEventDto.paid(),
             newEventDto.participantLimit(),
@@ -33,7 +33,17 @@ public class EventMapper {
             newEventDto.title());
     }
 
-    public EventFullDto mapToFullDto(Event event, long confirmedRequests, Long views, Long commentaries) {
+    public EventInfoDto maptoEventInfoDto(EventInfo eventInfo) {
+        return new EventInfoDto(
+            eventInfo.getId(),
+            eventInfo.getInitiatorId(),
+            eventInfo.getParticipantLimit(),
+            eventInfo.isRequestModeration(),
+            eventInfo.getState());
+    }
+
+    public EventFullDto mapToFullDto(Event event, UserShortDto userDto, long confirmedRequests, Long views,
+        Long commentaries) {
         return new EventFullDto(
             event.getAnnotation(),
             CategoryMapper.mapToDto(event.getCategory()),
@@ -42,7 +52,7 @@ public class EventMapper {
             event.getDescription(),
             event.getEventDate(),
             event.getId(),
-            UserMapper.mapToUserShortDto(event.getInitiator()),
+            userDto,
             LocationMapper.mapToDto(event.getLocation()),
             event.getPaid(),
             event.getParticipantLimit(),
@@ -54,14 +64,15 @@ public class EventMapper {
             commentaries);
     }
 
-    public EventShortDto mapToShortDto(Event event, long confirmedRequests, Long views, Long commentaries) {
+    public EventShortDto mapToShortDto(Event event, UserShortDto userDto, long confirmedRequests, Long views,
+        Long commentaries) {
         return new EventShortDto(
             event.getAnnotation(),
             CategoryMapper.mapToDto(event.getCategory()),
             confirmedRequests,
             event.getEventDate(),
             event.getId(),
-            UserMapper.mapToUserShortDto(event.getInitiator()),
+            userDto,
             event.getPaid(),
             event.getTitle(),
             views,

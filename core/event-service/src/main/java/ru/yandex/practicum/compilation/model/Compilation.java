@@ -16,7 +16,7 @@ import lombok.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "compilation")
+@Table(name = "compilations")
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Compilation {
 

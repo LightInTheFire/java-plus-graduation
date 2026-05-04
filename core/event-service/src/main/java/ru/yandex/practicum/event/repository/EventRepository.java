@@ -7,6 +7,7 @@ import java.util.Set;
 
 import ru.yandex.practicum.event.dto.EventState;
 import ru.yandex.practicum.event.model.Event;
+import ru.yandex.practicum.event.model.EventInfo;
 import ru.yandex.practicum.event.model.QEvent;
 import ru.yandex.practicum.event.service.EventsAdminGetRequest;
 import ru.yandex.practicum.event.service.EventsPublicGetRequest;
@@ -26,7 +27,7 @@ public interface EventRepository extends JpaRepository<Event, Long>, QuerydslPre
         BooleanBuilder builder = new BooleanBuilder();
 
         if (request.hasUsers()) {
-            builder.and(event.initiator.id.in(request.users()));
+            builder.and(event.initiatorId.in(request.users()));
         }
 
         if (request.hasStates()) {
@@ -86,9 +87,11 @@ public interface EventRepository extends JpaRepository<Event, Long>, QuerydslPre
 
     Optional<Event> findByIdAndState(Long id, EventState state);
 
-    Page<Event> findByInitiator_Id(Long initiatorId, Pageable pageable);
+    Page<Event> findByInitiatorId(Long initiatorId, Pageable pageable);
 
     Set<Event> findAllByIdIn(Collection<Long> ids);
 
     boolean existsById(Long eventId);
+
+    Optional<EventInfo> findEventInfoById(Long eventId);
 }

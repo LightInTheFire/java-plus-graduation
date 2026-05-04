@@ -18,7 +18,8 @@ import ru.yandex.practicum.event.model.Event;
 import ru.yandex.practicum.event.repository.EventRepository;
 import ru.yandex.practicum.exception.ConflictException;
 import ru.yandex.practicum.exception.NotFoundException;
-import ru.yandex.practicum.request.repository.ParticipationRequestRepository;
+import ru.yandex.practicum.request.client.RequestClient;
+import ru.yandex.practicum.user.client.UserClient;
 
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
@@ -35,7 +36,8 @@ public class CompilationsServiceImpl implements CompilationsService {
 
     private final CompilationsRepository compRepository;
     private final EventRepository eventRepository;
-    private final ParticipationRequestRepository requestRepository;
+    private final RequestClient requestClient;
+    private final UserClient userClient;
 
     @Override
     public Collection<CompilationDto> findAll(CompilationsPublicGetRequest getRequest) {
@@ -124,8 +126,12 @@ public class CompilationsServiceImpl implements CompilationsService {
         List<EventShortDto> events = compilation.getEvents()
             .stream()
             .map(
-                event -> EventMapper
-                    .mapToShortDto(event, confirmedRequests.getOrDefault(event.getId(), 0L), null, null))
+                event -> EventMapper.mapToShortDto(
+                    event,
+                    userClient.getUser(event.getInitiatorId()),
+                    confirmedRequests.getOrDefault(event.getId(), 0L),
+                    null,
+                    null))
             .toList();
 
         return CompilationsMapper.mapToDto(compilation, events);
@@ -154,6 +160,6 @@ public class CompilationsServiceImpl implements CompilationsService {
             .map(Event::getId)
             .toList();
 
-        return requestRepository.countConfirmedByEventIds(eventIds);
+        return requestClient.countConfirmed(eventIds);
     }
 }
