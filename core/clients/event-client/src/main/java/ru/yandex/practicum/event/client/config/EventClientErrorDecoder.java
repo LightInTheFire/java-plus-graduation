@@ -17,8 +17,8 @@ public class EventClientErrorDecoder implements ErrorDecoder {
         int statusCode = response.status();
 
         if (statusCode == 404) {
-            log.warn("User not found. methodKey={}, status={}", methodKey, statusCode);
-            return new NotFoundException("User not found");
+            log.warn("Event not found. methodKey={}, status={}", methodKey, statusCode);
+            return new NotFoundException("Event not found");
         }
 
         if (statusCode >= 500) {
