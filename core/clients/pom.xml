@@ -11,5 +11,8 @@
 
     <artifactId>clients</artifactId>
     <packaging>pom</packaging>
+    <modules>
+        <module>user-client</module>
+    </modules>
 
 </project>
