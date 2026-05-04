@@ -14,6 +14,8 @@
     <modules>
         <module>user-client</module>
         <module>event-client</module>
+        <module>comment-client</module>
+        <module>request-client</module>
     </modules>
 
 </project>
