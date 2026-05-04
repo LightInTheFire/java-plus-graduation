@@ -1,8 +1,0 @@
-package ru.yandex.practicum.exception;
-
-public class ForbiddenAccessException extends RuntimeException {
-
-    public ForbiddenAccessException(String message) {
-        super(message);
-    }
-}
