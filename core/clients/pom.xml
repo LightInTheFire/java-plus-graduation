@@ -13,6 +13,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>user-client</module>
+        <module>event-client</module>
     </modules>
 
 </project>
