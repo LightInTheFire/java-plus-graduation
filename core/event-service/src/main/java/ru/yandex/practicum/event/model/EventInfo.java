@@ -10,7 +10,7 @@ public interface EventInfo {
 
     Integer getParticipantLimit();
 
-    Boolean isRequestModeration();
+    Boolean getRequestModeration();
 
     EventState getState();
 }

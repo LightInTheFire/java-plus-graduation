@@ -38,7 +38,7 @@ public class EventMapper {
             eventInfo.getId(),
             eventInfo.getInitiatorId(),
             eventInfo.getParticipantLimit(),
-            eventInfo.isRequestModeration(),
+            eventInfo.getRequestModeration(),
             eventInfo.getState());
     }
 
