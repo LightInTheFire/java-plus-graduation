@@ -342,7 +342,12 @@ public class EventServiceImpl implements EventService {
 
     private List<ViewStatsDto> getStatsForEvents(List<String> uris, LocalDateTime startDate) {
         try {
-            return statsClient.getStats(startDate, LocalDateTime.now(), uris, true);
+            return statsClient.getStats(
+                startDate,
+                LocalDateTime.now()
+                    .plusSeconds(10),
+                uris,
+                true);
         } catch (RestClientException e) {
             log.error("Error during getting stats for events", e);
         }
