@@ -1,6 +1,8 @@
 package ru.yandex.practicum.comment.service;
 
 import java.util.Collection;
+import java.util.List;
+import java.util.Map;
 
 import ru.yandex.practicum.comment.dto.CommentDto;
 
@@ -19,4 +21,6 @@ public interface CommentService {
     CommentDto updateComment(CommentsUpdateRequest request);
 
     CommentDto getById(Long commentId);
+
+    Map<Long, Long> countCommentsForEventIds(List<Long> eventIds);
 }

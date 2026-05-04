@@ -11,6 +11,7 @@ import ru.yandex.practicum.comment.dto.CommentDto;
 import ru.yandex.practicum.comment.mapper.CommentMapper;
 import ru.yandex.practicum.comment.model.Comment;
 import ru.yandex.practicum.comment.repository.CommentRepository;
+import ru.yandex.practicum.comment.repository.EventCommentCount;
 import ru.yandex.practicum.event.client.EventClient;
 import ru.yandex.practicum.exception.ForbiddenAccessException;
 import ru.yandex.practicum.exception.NotFoundException;
@@ -122,6 +123,13 @@ public class CommentServiceImpl implements CommentService {
         Comment comment = getCommentByIdOrThrow(commentId);
         UserShortDto author = userClient.getUser(comment.getAuthorId());
         return CommentMapper.toCommentDto(comment, author);
+    }
+
+    @Override
+    public Map<Long, Long> countCommentsForEventIds(List<Long> eventIds) {
+        return commentRepository.countCommentsByEventIds(eventIds)
+            .stream()
+            .collect(Collectors.toMap(EventCommentCount::eventId, EventCommentCount::count));
     }
 
     private Comment getCommentByIdOrThrow(Long commentId) {
