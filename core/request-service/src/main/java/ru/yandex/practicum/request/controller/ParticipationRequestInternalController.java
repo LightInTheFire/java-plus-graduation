@@ -10,6 +10,7 @@ import ru.yandex.practicum.request.service.ParticipationRequestService;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
@@ -25,7 +26,7 @@ public class ParticipationRequestInternalController {
     private final ParticipationRequestService requestService;
 
     @GetMapping("/confirmed")
-    public Map<Long, Long> countConfirmedRequestsByEventIds(@NotEmpty List<Long> eventIds) {
+    public Map<Long, Long> countConfirmedRequestsByEventIds(@RequestParam @NotEmpty List<Long> eventIds) {
         log.info("Received count confirmed requests for eventIds {}", eventIds);
         return requestService.countConfirmedByEventIds(eventIds);
     }

@@ -7,6 +7,7 @@ import ru.yandex.practicum.comment.client.config.CommentFeignConfiguration;
 
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import io.github.resilience4j.retry.annotation.Retry;
 
@@ -15,5 +16,5 @@ import io.github.resilience4j.retry.annotation.Retry;
 public interface CommentClient {
 
     @GetMapping("/count")
-    Map<Long, Long> countComments(List<Long> eventIds);
+    Map<Long, Long> countComments(@RequestParam List<Long> eventIds);
 }

@@ -23,7 +23,7 @@ public class EventClientErrorDecoder implements ErrorDecoder {
 
         if (statusCode >= 500) {
             log.error("Server error. methodKey={}, status={}", methodKey, statusCode);
-            return new ServiceUnavailableException("Remote service error");
+            return new ServiceUnavailableException("Event server unavailable");
         }
         return defaultErrorDecoder.decode(methodKey, response);
     }

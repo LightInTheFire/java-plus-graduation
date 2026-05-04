@@ -23,7 +23,7 @@ public class UserClientErrorDecoder implements ErrorDecoder {
 
         if (statusCode >= 500) {
             log.error("Server error. methodKey={}, status={}", methodKey, statusCode);
-            return new ServiceUnavailableException("Remote service error");
+            return new ServiceUnavailableException("User server unavailable");
         }
         return defaultErrorDecoder.decode(methodKey, response);
     }
