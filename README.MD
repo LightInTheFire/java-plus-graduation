@@ -13,13 +13,16 @@ Explore With Me — микросервисное приложение на Sprin
 
 Проект состоит из следующих микросервисов:
 
-| Сервис        | Порт | Описание                   |
-|---------------|------|----------------------------|
-| Main Service  | 8080 | Основная бизнес-логика     |
-| Stats Service | 9090 | Статистика событий         |
-| Gateway       | 8085 | API-шлюз                   |
-| Discovery     | 8761 | Service Discovery (Eureka) |
-| Config        | 8888 | Config Server              |
+| Сервис              | Порт | Описание                                 |
+|---------------------|------|------------------------------------------|
+| Event Service       | 0    | Основной сервис (события, категории)     |
+| User Service        | 0    | Сервис пользователей                     |
+| Request Service     | 0    | Сервис заявок на участие                 |
+| Comment Service     | 0    | Сервис комментариев                      |
+| Stats Service       | 0    | Сервис статистики событий                |
+| Gateway             | 8080 | API-шлюз                                 |
+| Discovery Server    | 8761 | Service Discovery (Eureka)               |
+| Config Server       | 0    | Config Server                            |
 
 ## Технологический стек
 
@@ -40,11 +43,17 @@ Explore With Me — микросервисное приложение на Sprin
 - **MapStruct** — маппинг DTO
 - **Lombok** — уменьшение бойлерплейт кода
 - **Jackson** — JSON-сериализация
+- **QueryDSL** — типобезопасные запросы
 - **Spotless** — форматирование кода
 
 ## Модули проекта
 
-- `core/main-service` — Основной сервис (события, пользователи, категории)
+- `core/event-service` — Основной сервис (события, категории, подборки)
+- `core/user-service` — Сервис пользователей
+- `core/request-service` — Сервис заявок на участие в событиях
+- `core/comment-service` — Сервис комментариев к событиям
+- `core/clients` — Общие Feign-клиенты между сервисами
+- `core/api-contracts` — Общие DTO и исключения
 - `stats/stats-server` — Сервис статистики
 - `stats/stats-dto` — Общие DTO для сервиса статистики
 - `stats/stats-client` — Клиент для сервиса статистики
@@ -76,19 +85,21 @@ docker-compose up -d
 
 ### Порты
 
-| Сервис           | Порт  |
-|------------------|-------|
-| Main Service     | 8080  |
-| Stats Service    | 9090  |
-| Gateway          | 8085  |
-| Discovery Server | 8761  |
-| Config Server    | 8888  |
-| Stats DB         | 13000 |
-| Main DB          | 13001 |
+| Сервис           | Порт |
+|------------------|------|
+| Event Service    | 0    |
+| User Service     | 0    |
+| Request Service  | 0    |
+| Comment Service  | 0    |
+| Stats Service    | 0    |
+| Gateway          | 8080 |
+| Discovery Server | 8761 |
+| Config Server    | 0    |
+| PostgreSQL       | 5432 |
 
 ## API документация
 
-- [Main Service API](docs/ewm-main-service-spec.json)
+- [Microservices API](docs/ewm-main-service-spec.json)
 - [Stats Service API](docs/ewm-stats-service-spec.json)
 
 Для просмотра используйте:
@@ -102,17 +113,22 @@ docker-compose up -d
 
 ```
 java-plus-graduation/
-├── core/                    # Модуль основного сервиса
-│   └── main-service/
-├── stats/                   # Модуль сервиса статистики
-│   ├── stats-client/
-│   ├── stats-dto/
-│   └── stats-server/
-├── infra/                   # Инфраструктурные модули
-│   ├── config-server/
-│   ├── discovery-server/
-│   └── gateway-server/
-├── docs/                    # API спецификации
-├── postman/                 # Postman тесты
-└── docker-compose.yml
+├── core/                    # Основная бизнес-логика
+│   ├── event-service/       # Сервис событий
+│   ├── user-service/        # Сервис пользователей
+│   ├── request-service/     # Сервис заявок
+│   ├── comment-service/     # Сервис комментариев
+│   ├── clients/             # Общие клиенты
+│   └── api-contracts/       # Общие DTO и исключения
+├── stats/                   # Cтатистика
+│   ├── stats-client/        # Клиент статистики
+│   ├── stats-dto/           # DTO статистики
+│   └── stats-server/        # Сервер статистики
+├── infra/                   # Инфраструктурные компоненты
+│   ├── config-server/       # Config Server
+│   ├── discovery-server/    # Service Discovery (Eureka)
+│   └── gateway-server/      # API Gateway
+├── docs/                    # API спецификации (OpenAPI/Swagger)
+├── postman/                 # Postman коллекции для тестирования
+└── docker-compose.yml       # Конфигурация Docker Compose для инфраструктуры
 ```

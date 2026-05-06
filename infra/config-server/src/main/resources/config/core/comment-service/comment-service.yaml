@@ -1,0 +1,23 @@
+server:
+  port: 0
+
+resilience4j:
+  retry:
+    instances:
+      user-client:
+        max-attempts: 3
+        wait-duration: 500ms
+        retry-exceptions:
+          - ru.yandex.practicum.exception.ServiceUnavailableException
+      event-client:
+        max-attempts: 3
+        wait-duration: 500ms
+        retry-exceptions:
+          - ru.yandex.practicum.exception.ServiceUnavailableException
+
+spring:
+  profiles:
+    include:
+      - db
+  datasource:
+    url: jdbc:postgresql://localhost:5432/comments

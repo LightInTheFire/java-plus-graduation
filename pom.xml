@@ -39,6 +39,7 @@
         <maven-compiler-plugin.version>3.11.0</maven-compiler-plugin.version>
         <avro-maven-plugin.version>${avro.version}</avro-maven-plugin.version>
         <protobuf-plugin.version>2.4.0</protobuf-plugin.version>
+        <api-contracts.version>1.0-SNAPSHOT</api-contracts.version>
     </properties>
 
     <dependencyManagement>
@@ -49,6 +50,11 @@
                 <version>${spring-cloud-dependencies.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>ru.yandex.practicum</groupId>
+                <artifactId>api-contracts</artifactId>
+                <version>${api-contracts.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.querydsl</groupId>

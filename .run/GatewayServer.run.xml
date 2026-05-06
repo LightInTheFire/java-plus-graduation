@@ -1,0 +1,9 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="GatewayServer" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+    <module name="gateway-server" />
+    <option name="SPRING_BOOT_MAIN_CLASS" value="ru.yandex.practicum.GatewayServer" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>
