@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import ru.yandex.practicum.compilation.dto.CompilationDto;
@@ -20,6 +21,7 @@ import ru.yandex.practicum.exception.ConflictException;
 import ru.yandex.practicum.exception.NotFoundException;
 import ru.yandex.practicum.request.client.RequestClient;
 import ru.yandex.practicum.user.client.UserClient;
+import ru.yandex.practicum.user.dto.UserShortDto;
 
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
@@ -123,12 +125,24 @@ public class CompilationsServiceImpl implements CompilationsService {
     }
 
     private CompilationDto toDto(Compilation compilation, Map<Long, Long> confirmedRequests) {
+        if (compilation.getEvents() == null || compilation.getEvents()
+            .isEmpty()) {
+            return CompilationsMapper.mapToDto(compilation, List.of());
+        }
+
+        List<Long> initiatorIds = compilation.getEvents()
+            .stream()
+            .map(Event::getInitiatorId)
+            .toList();
+        Map<Long, UserShortDto> usersById = userClient.getUsersByIds(initiatorIds)
+            .stream()
+            .collect(Collectors.toMap(UserShortDto::id, Function.identity()));
         List<EventShortDto> events = compilation.getEvents()
             .stream()
             .map(
                 event -> EventMapper.mapToShortDto(
                     event,
-                    userClient.getUser(event.getInitiatorId()),
+                    usersById.get(event.getId()),
                     confirmedRequests.getOrDefault(event.getId(), 0L),
                     null,
                     null))
