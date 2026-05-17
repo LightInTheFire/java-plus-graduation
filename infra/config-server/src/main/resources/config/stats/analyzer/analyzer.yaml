@@ -1,0 +1,44 @@
+server:
+  port: 0
+
+grpc:
+  server:
+    port: 0
+
+spring:
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      group-id: analyzer-group
+      auto-offset-reset: earliest
+      enable-auto-commit: false
+
+  datasource:
+    url: jdbc:postgresql://${POSTGRES_HOST:localhost:5432}/${POSTGRES_DB_NAME:stats}
+    username: ${POSTGRES_USERNAME:postgres}
+    password: ${POSTGRES_PASSWORD:secret}
+
+  batch:
+    jdbc:
+      initialize-schema: never
+
+  sql:
+    init:
+      mode: always
+
+app:
+  kafka:
+    listener:
+      ack-mode: record
+    user-actions:
+      topic: stats.user-actions.v1
+      key-deserializer: org.apache.kafka.common.serialization.LongDeserializer
+      value-deserializer: ru.yandex.practicum.serialization.UserActionAvroDeserializer
+    event-similarity:
+      topic: stats.events-similarity.v1
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: ru.yandex.practicum.serialization.EventSimilarityAvroDeserializer
+
+logging:
+  level:
+    org.springframework.jdbc.core: DEBUG
