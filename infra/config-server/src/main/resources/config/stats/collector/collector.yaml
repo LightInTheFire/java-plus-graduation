@@ -1,0 +1,15 @@
+server:
+  port: 0
+
+grpc:
+  server:
+    port: 0
+
+spring:
+  kafka:
+    bootstrap-servers: localhost:9092
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.LongSerializer
+      value-serializer: ru.yandex.practicum.serialization.AvroSerializer
+    template:
+      default-topic: stats.user-actions.v1
